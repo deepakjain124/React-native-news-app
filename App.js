@@ -1,20 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from "./Screens/HomeScreen";
+import Launchingscreen from "./Screens/Launchingscreen";
+import { KeyboardAvoidingView, Platform } from "react-native";
+import Getlatest from "./Screens/Getlatest";
 
 export default function App() {
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{flex:1}}
+      >
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Launch"
+            component={Launchingscreen}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Home"
+            component={HomeScreen}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Getlatestnews"
+            component={Getlatest}
+          />
+        </Stack.Navigator>
+      </KeyboardAvoidingView>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
