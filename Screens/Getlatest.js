@@ -1,4 +1,5 @@
 import {
+  Image,
   StyleSheet,
   Text,
   TextInput,
@@ -8,6 +9,7 @@ import {
 import React, { useState } from "react";
 import { BottomSheet, ListItem } from "react-native-elements";
 import { Icon } from "react-native-elements";
+import Categories from "./components/Categories";
 const Getlatest = () => {
   const [isVisible, setIsVisible] = useState(false);
   const list = [{ title: "Sort By A-Z" }, { title: "Sort By Z-A" }];
@@ -17,15 +19,31 @@ const Getlatest = () => {
       <View style={styles.divider} />
       <TextInput style={styles.Input} placeholder="search for your" />
       <View style={styles.filter}>
-        <Icon name="sort" type="material" size={22} color="black" />
-        <Text
-          style={{ fontSize: 20, fontWeight: "600" }}
+        <TouchableOpacity
+          style={styles.filter}
           onPress={() => {
             setIsVisible(true);
           }}
         >
-          Filter
-        </Text>
+          <Icon name="sort" type="material" size={22} color="black" />
+          <Text style={{ fontSize: 20, fontWeight: "600" }}>Filter</Text>
+        </TouchableOpacity>
+      </View>
+      <Categories />
+      <View style={styles.card}>
+        <View style={styles.card}>
+          <Text>kjjhg</Text>
+          <Text style={{ backgroundColor: "red", width: "50%" }}>
+            This is mu channel This is mu channel This is mu channel This is mu
+            channel{" "}
+          </Text>
+        <Image
+          style={{ width: "50%", height: 90, resizeMode: "contain" }}
+          source={{
+            uri: "https://bilder3.n-tv.de/img/incoming/crop23437390/1858673763-cImg_4_3-w250/Ein-Leopard-2-Panzer-der-Bundeswehr.jpg",
+          }}
+          />
+          </View>
       </View>
       <BottomSheet
         isVisible={isVisible}
@@ -65,8 +83,7 @@ export default Getlatest;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 50,
+    padding: 30,
     paddingTop: 60,
   },
   heading: {
@@ -89,6 +106,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "space-around",
     flexDirection: "row",
-    marginTop:10
+    marginTop: 10,
+  },
+  card: {
+    marginTop: 10,
+    flexDirection: "row",
   },
 });
