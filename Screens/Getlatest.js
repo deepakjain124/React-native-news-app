@@ -1,5 +1,6 @@
 import {
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -7,6 +8,7 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
+
 import { BottomSheet, ListItem } from "react-native-elements";
 import { Icon } from "react-native-elements";
 import Categories from "./components/Categories";
@@ -14,6 +16,7 @@ const Getlatest = () => {
   const [isVisible, setIsVisible] = useState(false);
   const list = [{ title: "Sort By A-Z" }, { title: "Sort By Z-A" }];
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.heading}>Search News</Text>
       <View style={styles.divider} />
@@ -30,21 +33,8 @@ const Getlatest = () => {
         </TouchableOpacity>
       </View>
       <Categories />
-      <View style={styles.card}>
-        <View style={styles.card}>
-          <Text>kjjhg</Text>
-          <Text style={{ backgroundColor: "red", width: "50%" }}>
-            This is mu channel This is mu channel This is mu channel This is mu
-            channel{" "}
-          </Text>
-        <Image
-          style={{ width: "50%", height: 90, resizeMode: "contain" }}
-          source={{
-            uri: "https://bilder3.n-tv.de/img/incoming/crop23437390/1858673763-cImg_4_3-w250/Ein-Leopard-2-Panzer-der-Bundeswehr.jpg",
-          }}
-          />
-          </View>
-      </View>
+      
+      
       <BottomSheet
         isVisible={isVisible}
         containerStyle={{ backgroundColor: "rgba(0.5, 0.25, 0, 0.2)" }}
@@ -76,6 +66,7 @@ const Getlatest = () => {
         ))}
       </BottomSheet>
     </View>
+    </ScrollView>
   );
 };
 
@@ -109,7 +100,21 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   card: {
-    marginTop: 10,
-    flexDirection: "row",
+   marginTop:10,
+   borderWidth: 1,
+   padding:5,
+   borderColor:"gray",
+   borderRadius:10
+  //  borderTopLeftRadius: 20,
+  //  borderTopRightRadius: 20,
   },
+  heading_news:{
+    fontWeight:"bold",
+    fontSize:30,
+    textTransform:"capitalize"
+  },
+  content:{
+    fontSize:20,
+    color:"gray"
+  }
 });

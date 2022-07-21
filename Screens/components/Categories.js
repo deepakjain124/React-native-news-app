@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   StyleSheet,
@@ -31,6 +32,8 @@ const Categories = () => {
 
   const [list, setlist] = useState([]);
   const [APIDATA, setAPIDATA] = useState([]);
+  const[loader,setloader]=useState(true)
+  console.log(APIDATA.length);
   const showbottom = (type) => {
     if (type === "Country") {
       setlist(categories);
@@ -54,8 +57,8 @@ const Categories = () => {
         throw new Error(`Error! status: ${response.status}`);
       }
       const result = await response.json();
+      setloader(false)
       setAPIDATA(result.results);
-      console.log(result.results);
     } catch (err) {
       console.log(err);
     }
@@ -84,6 +87,33 @@ const Categories = () => {
           );
         }}
       />
+      {
+        loader?<ActivityIndicator size={60} color="gray" style={{marginTop:50, display:"flex",justifyContent:"center",alignContent:"center"}}/>:
+      <FlatList 
+      data={APIDATA}
+      renderItem={(item)=>{
+        // console.log(JSON.stringify(item.length),"this is my item");
+        return (
+          <>
+      <TouchableOpacity style={styles.card}>
+        <Image
+          style={{ width:"100%", height:200,borderTopLeftRadius:10,borderTopRightRadius:10, resizeMode: "stretch" }}
+          source={{
+            uri: item.item.image_url ? item.item.image_url:"https://previews.123rf.com/images/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg",
+          }}
+        />
+        <Text style={styles.heading_news}>Category:-{item.item.category}</Text>
+        <Text style={{fontSize:20,fontWeight:"700",fontStyle:"italic",textTransform:"capitalize"}}>Country:-{item.item.country}</Text>
+          <Text numberOfLines={5} style={styles.content}>
+           {item.item.description}
+          </Text>
+      </TouchableOpacity>
+          </>
+        )
+      }}
+      />
+    }
+      
       <Bottomsheets
         setIsVisible={setIsVisible}
         isVisible={isVisible}
@@ -115,5 +145,22 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
-  
+  card: {
+    marginTop:10,
+    borderWidth: 1,
+    padding:5,
+    borderColor:"gray",
+    borderRadius:10
+   //  borderTopLeftRadius: 20,
+   //  borderTopRightRadius: 20,
+   },
+   heading_news:{
+     fontWeight:"bold",
+     fontSize:25,
+     textTransform:"capitalize"
+   },
+   content:{
+     fontSize:20,
+     color:"gray"
+   }
 });
