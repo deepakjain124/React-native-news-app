@@ -4,11 +4,15 @@ import HomeScreen from "./Screens/HomeScreen";
 import Launchingscreen from "./Screens/Launchingscreen";
 import { KeyboardAvoidingView, Platform } from "react-native";
 import Getlatest from "./Screens/Getlatest";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import GetCarddata from "./Screens/GetCarddata";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -36,8 +40,16 @@ export default function App() {
             name="Getlatestnews"
             component={Getlatest}
           />
+           <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Getcarddata"
+            component={GetCarddata}
+          />
         </Stack.Navigator>
       </KeyboardAvoidingView>
     </NavigationContainer>
+    </Provider>
   );
 }

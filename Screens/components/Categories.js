@@ -7,14 +7,17 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Icon } from "react-native-elements";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Bottomsheets from "./Bottomsheets";
 import { categories, Country, Language } from "../../mockdata/Mockdata";
+import { useNavigation } from "@react-navigation/native";
 
 const Categories = () => {
+  const navigation=useNavigation()
   const [isVisible, setIsVisible] = useState(false);
-
+  const[saved,setsaved]=useState(false)
   const Paramemters = [
     {
       id: 1,
@@ -67,6 +70,10 @@ const Categories = () => {
   useEffect(() => {
     getlatest();
   }, []);
+
+  const getCardData=(item)=>{
+navigation.navigate("Getcarddata",{item})
+  }
   return (
     <>
       <FlatList
@@ -95,7 +102,7 @@ const Categories = () => {
         // console.log(JSON.stringify(item.length),"this is my item");
         return (
           <>
-      <TouchableOpacity style={styles.card}>
+      <TouchableOpacity onPress={()=>getCardData(item)} style={styles.card}>
         <Image
           style={{ width:"100%", height:200,borderTopLeftRadius:10,borderTopRightRadius:10, resizeMode: "stretch" }}
           source={{
@@ -107,6 +114,9 @@ const Categories = () => {
           <Text numberOfLines={5} style={styles.content}>
            {item.item.description}
           </Text>
+          <TouchableOpacity style={{alignItems:"flex-end"}}>
+          <Icon onPress={()=>setsaved(!saved)} name={saved?"turned-in":"turned-in-not"} type="material" size={35} color="black" />
+          </TouchableOpacity>
       </TouchableOpacity>
           </>
         )

@@ -59,10 +59,10 @@ const styles = StyleSheet.create({
       },
       button: {
         color: "white",
-        backgroundColor: "#1E6757",
+        backgroundColor: "black",
         padding: 15,
         fontWeight: "500",
-        borderRadius: 10,
+        borderRadius: 100,
         width: 120,
         fontSize: 20,
         textAlign: "center",
