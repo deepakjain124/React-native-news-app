@@ -7,6 +7,7 @@ import Getlatest from "./Screens/Getlatest";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import GetCarddata from "./Screens/GetCarddata";
+import Login from "./Screens/Login";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -19,6 +20,19 @@ export default function App() {
         style={{flex:1}}
       >
         <Stack.Navigator>
+        <Stack.Screen
+            options={{
+              headerShown: true,
+              title:"Login",
+              headerStyle: {
+                backgroundColor: 'white',
+              },
+              headerTintColor: '#000',
+              headerTitleAlign:'center',
+            }}
+            name="Login"
+            component={Login}
+          />
           <Stack.Screen
             options={{
               headerShown: false,
@@ -42,7 +56,7 @@ export default function App() {
           />
            <Stack.Screen
             options={{
-              headerShown: false,
+              headerShown: true,
             }}
             name="Getcarddata"
             component={GetCarddata}

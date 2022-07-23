@@ -25,7 +25,7 @@ const GetCarddata = ({ route, navigation }) => {
             uri: Incomingdata?.item?.item?.image_url,
           }}
         />
-          <Text style={{ fontSize: 30, fontWeight: "bold" ,textAlign:"left"}}>
+          <Text style={{ fontSize: 30, fontWeight: "bold" ,textAlign:"center"}}>
             <Text style={{ color: "red" }}> Author:-</Text>{" "}
             {Incomingdata?.item?.item?.creator
               ? Incomingdata?.item?.item?.creator
