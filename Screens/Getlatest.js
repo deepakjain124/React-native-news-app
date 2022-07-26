@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -7,20 +8,82 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { BottomSheet, ListItem } from "react-native-elements";
 import { Icon } from "react-native-elements";
 import Categories from "./components/Categories";
+import { useNavigation } from "@react-navigation/native";
 const Getlatest = () => {
+  const navigation=useNavigation()
   const [isVisible, setIsVisible] = useState(false);
+  const[search,setsearch]=useState("")
+  const [APIDATA, setAPIDATA] = useState([]);
+  const[filter,setfilter]=useState([])
+  // console.log(JSON.stringify(APIDATA.map((item)=>item.category)),"APIDATA");
+  const[loader,setloader]=useState(true)
+
+  const searchdata=(text)=>{
+    console.log(text)
+    filterdata(text)
+    // setsearch(text)
+    // const filter=APIDATA.filter((item)=>item.category)
+    // console.log(JSON.stringify(filter))
+  }
+
+  const filterdata=(searchdata)=>{
+    const abc=APIDATA.map((item)=>item)
+    const xxx=abc?.filter((item)=>item?.category[0].includes(searchdata.toLowerCase()))
+   if(searchdata!==""){
+    setfilter(xxx)
+   }else{
+    setfilter([])
+   }
+  }
+
+
+  const getlatest = async () => {
+    try {
+      const response = await fetch(
+        "https://newsdata.io/api/1/news?apikey=pub_93229c984214128774aa6852957de6f8e804"
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      setloader(false)
+      setAPIDATA(result.results);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const filterByAlphabt=()=>{
+    const filterCat=APIDATA.map((item)=>item);
+    const get=filterCat.sort((a,b)=>{
+    if(a.category<b.category){
+      return 1
+    }
+  }
+  )
+  console.log(JSON.stringify(get),"getttttttttttttttt")
+  }
+
+  useEffect(() => {
+    getlatest();
+  }, []);
   const list = [{ title: "Sort By A-Z" }, { title: "Sort By Z-A" }];
   return (
     <ScrollView>
     <View style={styles.container}>
+      <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between"}} >
       <Text style={styles.heading}>Search News</Text>
+      <TouchableOpacity  style={{backgroundColor:"white"}} onPress={()=>navigation.navigate("Login")}>
+      <Text style={{fontSize:20,color:"#000",backgroundColor:"white",padding:5,borderRadius:50}}>Sign Out</Text>
+      </TouchableOpacity>
+      </View>
       <View style={styles.divider} />
-      <TextInput style={styles.Input} placeholder="search for your" />
+      <TextInput style={styles.Input} onChangeText={searchdata} placeholder="search for a category" />
       <View style={styles.filter}>
         <TouchableOpacity
           style={styles.filter}
@@ -32,7 +95,7 @@ const Getlatest = () => {
           <Text style={{ fontSize: 20, fontWeight: "600" }}>Filter</Text>
         </TouchableOpacity>
       </View>
-      <Categories />
+      <Categories searchdata={searchdata} filter={filter} loader={loader} APIDATA={APIDATA} />
       
       
       <BottomSheet
@@ -58,7 +121,7 @@ const Getlatest = () => {
         {list.map((l, i) => (
           <ListItem key={i} containerStyle={l.containerStyle}>
             <ListItem.Content>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={filterByAlphabt}>
                 <ListItem.Title style={l.titleStyle}>{l.title}</ListItem.Title>
               </TouchableOpacity>
             </ListItem.Content>

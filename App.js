@@ -5,12 +5,31 @@ import Launchingscreen from "./Screens/Launchingscreen";
 import { KeyboardAvoidingView, Platform } from "react-native";
 import Getlatest from "./Screens/Getlatest";
 import { Provider } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { store } from "./store";
 import GetCarddata from "./Screens/GetCarddata";
 import Login from "./Screens/Login";
+import { useEffect } from "react";
+import GetNewssource from "./GetBynewssource/GetNewssource";
 
 export default function App() {
+  // const Drawer = createDrawerNavigator();
+
   const Stack = createNativeStackNavigator();
+//   const [auth,setauth]=useState()
+// const getid=()=>{
+//   const id=AsyncStorage.getItem("id")
+//   return id
+// }
+
+// useEffect(()=>{
+// if(getid()){
+//   setauth(true)
+// }
+// else{
+//   setauth(false)
+// }
+// },[])
 
   return (
     <Provider store={store}>
@@ -51,7 +70,7 @@ export default function App() {
             options={{
               headerShown: false,
             }}
-            name="Getlatestnews"
+            name="GetBylatestnews"
             component={Getlatest}
           />
            <Stack.Screen
@@ -60,6 +79,13 @@ export default function App() {
             }}
             name="Getcarddata"
             component={GetCarddata}
+          />
+           <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="GetByNewsSource"
+            component={GetNewssource}
           />
         </Stack.Navigator>
       </KeyboardAvoidingView>

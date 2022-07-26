@@ -26,8 +26,8 @@ const Login = () => {
   const [name, setname] = useState("");
   const [confirmpassword, setconfirmpassword] = useState("");
 
-  const navigate=()=>{
-    navigation.navigate("Launch")
+  const navigate=(data)=>{
+    navigation.navigate("Launch",{data})
   }
   const handleLogin = () => {
     if(email!=="" && password!==""){
@@ -41,17 +41,18 @@ const Login = () => {
   }
   
   const handlesignup=async()=>{
-    if(name!=="" && email!=="" && password!=="" ){
+    if(name==="" && email==="" && password==="" ){
+      Alert.alert("Please fill the fields")
+    }else if( password!==confirmpassword){
+      Alert.alert("Please fill the same password")
+    }else{
       await registerWithEmailAndPassword(email,password,name,showlogin)
       setemail("")
       setname("")
       setpassword("")
       setconfirmpassword("")
-    }else if( password!==confirmpassword){
-      Alert.alert("Please fill the same password")
-    }else{
-      Alert.alert("Please fill the fields")
     }
+
   }
 
   return (

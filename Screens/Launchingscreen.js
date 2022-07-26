@@ -4,12 +4,13 @@ import {
   ActivityIndicator,
   View,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const Launchingscreen = () => {
+const Launchingscreen = ({route}) => {
     const navigation=useNavigation()
   const [showloader, setshowloade] = useState(true);
 
@@ -21,6 +22,7 @@ const Launchingscreen = () => {
 
   useEffect(() => {
     hideloader();
+    Alert.alert("Welcome to the APP",route.params.data)
   }, []);
   return (
     <View style={styles.container}>

@@ -11,7 +11,7 @@ const HomeScreen = () => {
       <Text style={styles.heading}>Select Your Preferred Topic</Text>
       <View style={styles.tab}>
         <TouchableOpacity>
-          <Text onPress={()=>navigation.navigate("Getlatestnews")} style={styles.Topics}>Get Latest News</Text>
+          <Text onPress={()=>navigation.navigate("GetBylatestnews")} style={styles.Topics}>Get Latest News</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.tab}>
@@ -21,7 +21,7 @@ const HomeScreen = () => {
       </View>
       <View style={styles.tab}>
         <TouchableOpacity>
-          <Text style={styles.Topics}>News Source</Text>
+          <Text onPress={()=>navigation.navigate("GetByNewsSource")} style={styles.Topics}>News Source</Text>
         </TouchableOpacity>
       </View>
     </View>

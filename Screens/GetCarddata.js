@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 const GetCarddata = ({ route, navigation }) => {
   const { itemId, otherParam } = route.params;
   const [Incomingdata, setincomingdata] = useState([]);
-  console.log(JSON.stringify(Incomingdata), "hiiii");
   useEffect(() => {
     setincomingdata(route.params);
   }, [route.params]);

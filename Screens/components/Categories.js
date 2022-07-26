@@ -14,10 +14,11 @@ import Bottomsheets from "./Bottomsheets";
 import { categories, Country, Language } from "../../mockdata/Mockdata";
 import { useNavigation } from "@react-navigation/native";
 
-const Categories = () => {
+const Categories = ({APIDATA,loader,filter,searchdata}) => {
   const navigation=useNavigation()
   const [isVisible, setIsVisible] = useState(false);
   const[saved,setsaved]=useState(false)
+  const[savedata,setsavedata]=useState([])
   const Paramemters = [
     {
       id: 1,
@@ -34,9 +35,6 @@ const Categories = () => {
   ];
 
   const [list, setlist] = useState([]);
-  const [APIDATA, setAPIDATA] = useState([]);
-  const[loader,setloader]=useState(true)
-  console.log(APIDATA.length);
   const showbottom = (type) => {
     if (type === "Country") {
       setlist(categories);
@@ -50,29 +48,12 @@ const Categories = () => {
     }
   };
 
-  const getlatest = async () => {
-    try {
-      const response = await fetch(
-        "https://newsdata.io/api/1/news?apikey=pub_93229c984214128774aa6852957de6f8e804"
-      );
-
-      if (!response.ok) {
-        throw new Error(`Error! status: ${response.status}`);
-      }
-      const result = await response.json();
-      setloader(false)
-      setAPIDATA(result.results);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getlatest();
-  }, []);
 
   const getCardData=(item)=>{
 navigation.navigate("Getcarddata",{item})
+  }
+  const savedetail=(item)=>{
+   console.log(JSON.stringify(item));
   }
   return (
     <>
@@ -96,10 +77,11 @@ navigation.navigate("Getcarddata",{item})
       />
       {
         loader?<ActivityIndicator size={60} color="gray" style={{marginTop:50, display:"flex",justifyContent:"center",alignContent:"center"}}/>:
+        // searchdata!==" " && filter===[] ?
       <FlatList 
-      data={APIDATA}
+      data={filter.length?filter:APIDATA}
+      keyExtractor={(item,index)=>index}
       renderItem={(item)=>{
-        // console.log(JSON.stringify(item.length),"this is my item");
         return (
           <>
       <TouchableOpacity onPress={()=>getCardData(item)} style={styles.card}>
@@ -115,7 +97,7 @@ navigation.navigate("Getcarddata",{item})
            {item.item.description}
           </Text>
           <TouchableOpacity style={{alignItems:"flex-end"}}>
-          <Icon onPress={()=>setsaved(!saved)} name={saved?"turned-in":"turned-in-not"} type="material" size={35} color="black" />
+          <Icon onPress={()=>savedetail(item)} name={saved?"turned-in":"turned-in-not"} type="material" size={35} color="black" />
           </TouchableOpacity>
       </TouchableOpacity>
           </>
@@ -129,14 +111,6 @@ navigation.navigate("Getcarddata",{item})
         isVisible={isVisible}
         list={list}
       />
-      
-      {/* <FlatList
-     data={APIDATA}
-     keyExtractor={(item)=>{item.index}}
-     renderItem={(item)=>{
-        return <Text>{item.category}</Text>
-     }}
-     /> */}
     </>
   );
 };

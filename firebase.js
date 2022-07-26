@@ -1,9 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth"
-import {doc, getFirestore, setDoc} from "firebase/firestore"
+import {doc, getDoc, getFirestore, setDoc} from "firebase/firestore"
 import {createUserWithEmailAndPassword} from "firebase/auth"
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { useNavigation } from "@react-navigation/native";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -36,6 +37,7 @@ export const registerWithEmailAndPassword = async (email,password,name,showlogin
       password,
     });
    console.log("successfull")
+   Alert.alert("your Account is registered successfully")
    showlogin()
   } catch (err) {
     Alert.alert(err.message)
@@ -46,9 +48,12 @@ export const registerWithEmailAndPassword = async (email,password,name,showlogin
 export const LogInWithEmailAndPassword = async (email, password,navigate) => {
   try {
     const data = await signInWithEmailAndPassword(auth, email, password);
-    // const user = localStorage.setItem("user", auth.currentUser.uid);
-    Alert.alert("Wooho you are login successfully");
-    navigate()
+    // console.log(data.user.uid,"kljkhjgh");
+    const userblog = await getDoc(doc(db, "users", data.user.uid));
+    // const setid=AsyncStorage.mergeItem("id",data.user.uid)
+    // console.log(setid._W,"userblog");
+    // Alert.alert("Wooho you are login successfully");
+    navigate(userblog.data().name)
   } catch (err) {
     Alert.alert(err.message);
   }
